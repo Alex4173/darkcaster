@@ -1,3 +1,15 @@
 body {
-  color: red;
+  color: blue;
+  background-image: url('../images/weather_app_image.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.header img {
+  float:left;
+  width: 100px;
+  height:100px;
+}
+.header h1 {
+  position: center;
+  font-size: 70px;
 }

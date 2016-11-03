@@ -1,13 +1,89 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="forecast-app">
   <head>
     <title>Darkcaster</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css">
     <link rel='stylesheet' href='css/main.css'>
+    <link rel="shortcut icon" href="images/favicon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
   </head>
   <body>
-    I like cheese!
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js'>s</script>
+    <div class="header">
+      
+      <img src="images/bground_2.png" alt="Weather image">
+
+      <h1>Your Weather-App.</h1>
+      <br>
+   </div>
+    <div class="container">
+      <div ng-controller="HomeController">
+
+        <input type="text" ng-model='latitude' placeholder="Latitude">
+        <input type="text" ng-model="longitude" placeholder="Longitude">
+        <button ng-click='getWeather(latitude, longitude)'>Get the Weather</button>
+
+        <!-- This is the current weather view portion -->
+        <div ng-show='weather.currently'>
+          <div class="row">
+            <div class="col-md-1">
+              <img ng-src="images/{{weather.currently.icon}}.png"
+               class = 'img-responsive' alt="{{weather.currently.icon}}">
+            </div>
+            <div class="col-md-9">
+                <h3>{{ weather.currently.summary }}</h3>
+            </div>
+            <div class="col-md-2">
+              <strong>{{ weather.currently.time * 1000 | date:"short"}}</strong>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <p>Temperature: {{weather.currently.temperature | number:0 }} &deg;F</p>
+            </div>
+            <div class="col-md-3 col-md-offset-6">
+              <p>Precipitation Probability: {{ weather.currently.precipProbability * 100 | number:0 }}%</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-controller="MinutelyController">
+        <div ng-show="weather.minutely">
+          {{ minuteLat }}, {{ minuteLon }}
+          <ul>
+            <li ng-repeat="minute in weather.minutely.data">
+              Prob:{{ minute.precipProbability * 100 | number:0 }}
+              Intensity: {{ minute.precipIntensity * 100 | number:0 }}
+              Date: {{ minute.time | date: "short" }}
+            </li>
+          </ul>
+      </div>
+
+      <div ng-controller="HourlyController">  </div>
+      <div ng-controller="DailyController">  </div>
+  </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js"></script>
     <script src='js/app.js'></script>
+    <script src="js/controllers/home.controller.js"></script>
+    <script src="js/controllers/minutely.controller.js"></script>
+    <script src="js/controllers/hourly.controller.js"></script>
+    <script src="js/controllers/daily.controller.js"></script>
+    <script src="js/services/weather.service.js"></script>
   </body>
 </html>
